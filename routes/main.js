@@ -40,3 +40,4 @@ module.exports = function (app, shopData) {
     app.get('/about', function (req, res) {
       res.render('about.ejs', shopData);
     });
+};
