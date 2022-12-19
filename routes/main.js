@@ -228,5 +228,99 @@ module.exports = function (app, shopData) {
       }
     );
 
+    // --->>> LOGIN ...................................................................................................................................
+
+    // use the Express Router to handle our routes
+    app.get('/login', function (req, res) {
+      // render the login page
+      res.render('login.ejs', shopData);
+    });
+
+    // --->>> LOGGED IN ...............................................................................................................................
+
+    // use the Express Router to handle our routes
+    app.post('/loggedin', function (req, res) {
+      // declare array params to store data
+      let params = [
+        req.sanitize(req.body.username),
+        req.sanitize(req.body.password),
+      ];
+
+      // query database to get all the books
+      sqlquery = 'SELECT username FROM users WHERE username = ? ';
+
+      // execute sql query
+      db.query(sqlquery, params, (err, result) => {
+        // if error
+        if (err) {
+          // return console.error(err.message);
+          res.render('login.ejs', shopData);
+        }
+
+        // if not error
+        if ((username = result[0])) {
+          // print message
+          console.log('Your username is correct');
+
+          // declare variable to store password
+          let password = req.body.password;
+
+          // query database to get all the books
+          sqlquery = 'SELECT hashedPassword FROM users WHERE username = ?';
+
+          // execute sql query
+          db.query(sqlquery, [req.sanitize(req.body.username)], (err, result) => {
+            // declare variable to store hashed password
+            let hashedPassword = result[0].hashedPassword;
+
+            // use function compare of bcrypt to compare the password with the hashed password
+            bcrypt.compare(password, hashedPassword, function (err, result) {
+              // if error
+              if (err) {
+                // throw error
+                return console.error(err.message);
+
+                // if not error
+              } else if (result == true) {
+                // print message
+                console.log('>>> Your password is correct');
+
+                // store the username in a variable to be used with the EJS pages
+                loggedinuser = req.sanitize(req.body.username);
+
+                // Save user session here, when login is successful
+                req.session.userId = req.sanitize(req.body.username);
+
+                // render the logged in page
+                res.render('loggedin.ejs', shopData);
+
+                // if error
+              } else {
+                // print message
+                console.log('>>> Your password is incorrect');
+
+                // store the username in a variable to be used with the EJS pages
+                loggedinuser = req.sanitize(req.body.username);
+
+                // render the wrong key page
+                res.render('wrongKey.ejs', shopData);
+              }
+            });
+          });
+
+          // if error
+        } else {
+          // print message
+          console.log('>>> This username does not exist.');
+
+          // store the username in a variable to be used with the EJS pages
+          loggedinuser = req.sanitize(req.body.username);
+
+          // render the logged out page
+          res.render('loggedout.ejs', shopData);
+        }
+      });
+    });
+
 // end of module.exports
 };
