@@ -24,19 +24,19 @@ CREATE TABLE
     foods (
         id INT AUTO_INCREMENT NOT NULL UNIQUE,
         username VARCHAR(50) NOT NULL,
-        name VARCHAR(50),
-        value DECIMAL(5, 2) unsigned,
-        unit DECIMAL(5, 2) unsigned,
-        carbs DECIMAL(5, 2) unsigned
+        name VARCHAR(50) NOT NULL,
+        value DECIMAL(5, 2) NOT NULL,
+        unit DECIMAL(5, 2) NOT NULL,
+        carbs INT NOT NULL,
         PRIMARY KEY(id)
     );
 
 -- Insert data into the table foods
 INSERT INTO foods (username, name, value, unit, carbs)
 VALUES
-('calves@gmail.com', 'Apple', 0.52, 1, 0.13),
-('mike@gmail.com', 'Pepper', 0.32, 1, 0.70),
-('georgina@gmail.com','Banana', 1.82, 1, 2.30);
+('calves@gmail.com', 'Apple', 0.52, 0.13, 120),
+('mike@gmail.com', 'Pepper', 0.32, 0.70), 70,
+('georgina@gmail.com','Banana', 1.82, 2.30, 210);
 
 -- Path: create_db.sql
 CREATE TABLE 
