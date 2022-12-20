@@ -64,7 +64,7 @@ app.set('view engine', 'ejs');
 app.engine('html', ejs.renderFile);
 
 // Define our data
-var shopData = { shopName: "Recipe's Buddy" };
+var shopData = { shopName: "Recipe Buddy" };
 var loggedinuser = '';
 var emailaddress_ = '';
 var firstname_ = '';
