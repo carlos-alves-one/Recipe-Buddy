@@ -19,24 +19,33 @@ WITH
 -- Grant privileges to the user
 GRANT ALL PRIVILEGES ON myRecipesBuddy.* TO 'appuser'@'localhost';
 
--- Create the table foods
+-- Create the table ingredients
 CREATE TABLE
-    foods (
+    ingredients (
         id INT AUTO_INCREMENT NOT NULL UNIQUE,
         username VARCHAR(50) NOT NULL,
-        name VARCHAR(50) NOT NULL,
-        value DECIMAL(5, 2) NOT NULL,
-        unit DECIMAL(5, 2) NOT NULL,
-        carbs INT NOT NULL,
+        ingred_name VARCHAR(50) NOT NULL,
+        value_per SMALLINT NOT NULL,
+        unit VARCHAR(2) NOT NULL,
+        carbs SMALLINT NOT NULL,
+        fats SMALLINT NOT NULL,
+        protein SMALLINT NOT NULL,
+        salt SMALLINT NOT NULL,
+        sugar SMALLINT NOT NULL,
         PRIMARY KEY(id)
     );
 
--- Insert data into the table foods
-INSERT INTO foods (username, name, value, unit, carbs)
-VALUES
-('calves@gmail.com', 'Apple', 0.52, 0.13, 120),
-('mike@gmail.com', 'Pepper', 0.32, 0.70), 70,
-('georgina@gmail.com','Banana', 1.82, 2.30, 210);
+-- Insert data into the table ingredients
+INSERT INTO ingredients (username, ingred_name, value_per, unit, carbs, fats, protein, salt, sugar)
+VALUES 
+    ('cdeol003', 'plain flour', 100, 'g', 70, 1, 10, 0, 0),
+    ('cdeol003', 'caster sugar', 100, 'g', 100, 0, 0, 0, 100),
+    ('cdeol003', 'eggs', 100, 'g', 0, 10, 12, 0, 0),
+    ('cdeol003', 'milk', 100, 'g', 4, 3, 3, 0, 4),
+    ('cdeol003', 'chocolate', 100, 'g', 50, 30, 5, 0, 40),
+    ('cdeol003', 'baking soda', 100, 'g', 0, 0, 0, 0, 0),
+    ('cdeol003', 'cocoa powder', 100, 'g', 10, 20, 0, 0, 0),
+    ('cdeol003', 'chocolate chips', 100, 'g', 50, 30, 5, 0, 40);
 
 -- Path: create_db.sql
 CREATE TABLE 
