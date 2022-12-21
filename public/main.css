@@ -28,6 +28,7 @@ p,li {
 
 li {
 
+  display: inline;
   font-size: large;
   text-decoration: none;
   width:inherit;
