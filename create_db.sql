@@ -40,10 +40,8 @@ INSERT INTO ingredients (username, ingred_name, value_per, unit, carbs, fats, pr
 VALUES 
     ('cdeol003', 'plain flour', 100, 'g', 70, 1, 10, 0, 0),
     ('cdeol003', 'caster sugar', 100, 'g', 100, 0, 0, 0, 100),
-    ('cdeol003', 'eggs', 100, 'g', 0, 10, 12, 0, 0),
     ('cdeol003', 'milk', 100, 'g', 4, 3, 3, 0, 4),
     ('cdeol003', 'chocolate', 100, 'g', 50, 30, 5, 0, 40),
-    ('cdeol003', 'baking soda', 100, 'g', 0, 0, 0, 0, 0),
     ('cdeol003', 'cocoa powder', 100, 'g', 10, 20, 0, 0, 0),
     ('cdeol003', 'chocolate chips', 100, 'g', 50, 30, 5, 0, 40);
 

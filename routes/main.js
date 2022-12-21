@@ -334,5 +334,49 @@ module.exports = function (app, shopData) {
       });
     });
 
+    // --->>> FOOD LIST ...............................................................................................................................
+
+    // use the Express Router to handle our routes
+    app.get('/foodList', function (req, res) {
+
+      // declare variable to store sql query
+      let sqlquery = "SELECT * FROM ingredients";
+   
+      // execute sql query
+      db.query(sqlquery, (err, result) => {
+
+          // if error
+          if (err) {
+              // return to main menu
+              res.redirect('./');
+          }
+
+          // if not error
+          // store data in variable and print on the console
+          let newData = Object.assign({}, shopData, {availableIngredients: result});
+          console.log(newData)
+
+          // render the food list page
+          res.render("foodList.ejs", newData)
+      });
+     });
+
+     // --->>> ADD FOOD ................................................................................................................................
+
+     // use the Express Router to handle our routes
+      app.post('/addFood', function (req, res) {
+
+        // declare array params to store data
+        let params = [
+          req.sanitize(req.body.name),
+          req.sanitize(req.body.price),
+          req.sanitize(req.body.description),
+          req.sanitize(req.body.image),
+          req.sanitize(req.body.category),
+          req.sanitize(req.body.ingredient1),
+          req.sanitize(req.body.ingredient2),
+          req.sanitize(req.body.ingredient3),
+          
+
 // end of module.exports
 };
