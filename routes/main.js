@@ -576,7 +576,7 @@ module.exports = function (app, shopData) {
             if (newData.availableIngredients.length == 0) {
 
               // print message
-              console.log('>>> No ingredient found. Please try again');
+              console.log('>>> Ingredient not found. Please try again');
 
               // render the search food page not found in the database
               res.render('searchFood-Null.ejs', newData);
