@@ -508,5 +508,18 @@ module.exports = function (app, shopData) {
     }
   );
 
+  // --->>> SEARCH FOOD ................................................................................................................................
+
+  // use the Express Router to handle our routes
+  app.get('/searchFood', redirectLogin, function (req, res) {
+
+    // render the search food page
+    res.render('searchFood.ejs', shopData);
+  });
+
+  // use the Express Router to handle our routes
+  app.get('/searchFood-Result', function (req, res) {
+
+
   // end of module.exports
 };
