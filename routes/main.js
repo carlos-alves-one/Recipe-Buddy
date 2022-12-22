@@ -595,5 +595,15 @@ module.exports = function (app, shopData) {
     }
   );
 
+  // --->>> UPDATE FOOD ................................................................................................................................
+
+  // use the Express Router to handle our routes
+  app.get('/updateFood', redirectLogin, function (req, res) {
+    // render the update food page
+    res.render('updateFood.ejs', shopData);
+  });
+  
+
+
   // end of module.exports
 };
