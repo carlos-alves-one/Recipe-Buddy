@@ -503,7 +503,7 @@ module.exports = function (app, shopData) {
           }
         });
         // render the food list page
-        //res.redirect('./foodList');
+        res.redirect('./foodList');
       }
     }
   );
