@@ -518,7 +518,19 @@ module.exports = function (app, shopData) {
   });
 
   // use the Express Router to handle our routes
-  app.get('/searchFood-Result', function (req, res) {
+  app.get(
+    '/searchFood-Result',
+    // validate the input
+    [check('searchFood')
+    // use sanitize to trim the input
+    .trim()
+    //use sanitize to escape the input
+    .escape()
+    // validate the input is valid name
+    .isAlpha().withMessage('Please enter a valid name').isLength({ min: 3 }).withMessage('Name must be at least 3 characters long')
+  ],
+    
+    function (req, res) {
 
 
   // end of module.exports
