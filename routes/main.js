@@ -521,7 +521,7 @@ module.exports = function (app, shopData) {
     '/searchFood-Result',
     // validate the input
     [
-      check('searchFood')
+      check('keyword')
         // use sanitize to trim the input
         .trim()
         //use sanitize to escape the input
