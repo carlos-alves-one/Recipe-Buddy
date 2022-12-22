@@ -28,11 +28,28 @@ Created...: 22/12/2022
           <li><a href="logout">Log Out</a></li>
         </ul>
       </nav>
-        <h1>Search Food</h1>
-        <form action="/searchFood" method="POST">
-          <label for="foodName">Food Name</label>
-          <input type="text" id="foodName" name="foodName" placeholder="Food Name">
-          <input type="submit" value="Search">
-        </form>
+      <h1>Search of Ingredients on <%=shopName%> :</h1>
+      <table>
+        <tr>
+            <th>Ingredient</th>
+            <th>Values per</th>
+            <th>Carbs</th>
+            <th>Fats</th>
+            <th>Proteins</th>
+            <th>Salt</th>
+            <th>Sugar</th>
+        </tr>
+        <% availableIngredients.forEach(function(food) { %>
+            <tr>
+                <td><%=food.ingred_name%></td>
+                <td><%=food.value_per%> <%=food.unit%></td>
+                <td><%=food.carbs%></td>
+                <td><%=food.fats%></td>
+                <td><%=food.protein%></td>
+                <td><%=food.salt%></td>
+                <td><%=food.sugar%></td>
+            </tr>
+        <% }) %>
+      </table>
   </body>
 </html>

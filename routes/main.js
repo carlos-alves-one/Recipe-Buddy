@@ -555,7 +555,7 @@ module.exports = function (app, shopData) {
           "%'";
 
         // execute sql query
-        db.query(sqlquery, (err, results) => {
+        db.query(sqlquery, (err, result) => {
           // if error
           if (err) {
             // print message
@@ -567,18 +567,25 @@ module.exports = function (app, shopData) {
           // if not error
           else {
             // define the data to pass to the view
-            let newData = Object.assign({}, shopData, {
-              availableFoods: result,
-            });
+            let newData = Object.assign({}, shopData, {availableIngredients: result});
 
             // print message
             console.log(newData);
 
-            // print message
-            console.log('>>> Food searched successfully');
+            // check we have data
+            if (newData.availableIngredients.length == 0) {
 
-            // render the search food result page
-            res.render('searchFood-Result.ejs', newData);
+              // print message
+              console.log('>>> No ingredient found. Please try again');
+
+            } else {
+
+              // print message
+              console.log('>>> Ingredient searched successfully');
+
+              // render the search food result page
+              res.render('searchFood-Result.ejs', newData);
+            }
           }
         });
       }
