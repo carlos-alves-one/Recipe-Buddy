@@ -531,7 +531,59 @@ module.exports = function (app, shopData) {
   ],
     
     function (req, res) {
+      // store the errors in a variable
+      const errors = validationResult(req);
 
+      // if there are errors
+      if (!errors.isEmpty()) {
+        // print message
+        console.log('>>> ERROR: Please enter again the data');
+
+        // render the search food page
+        res.redirect('./searchFood');
+
+        // if there are no errors
+      } else {
+
+        // declare variable to store sql query
+        let sqlquery =
+
+          "SELECT * FROM ingredients WHERE ingred_name LIKE '%" + 
+
+          // use sanitize to trim the input
+          req.sanitize(req.query.keyword) + "%'";
+
+        // execute sql query
+        db.query(sqlquery, (err, results) => {
+
+          // if error
+          if (err) {
+
+            // print message
+            console.log(err + ' ' + sqlquery);
+
+            // throw error
+            res.redirect('./');
+          }
+          // if not error
+          else {
+
+            // define the data to pass to the view
+            let newData = Object.assign({}, shopData, { availableFoods: result });
+
+            // print message
+            console.log(newData);
+
+            // print message
+            console.log('>>> Food searched successfully');
+
+            // render the search food result page
+            res.render('searchFood-Result.ejs', newData);
+          }
+        });
+      }
+    }
+  );
 
   // end of module.exports
 };
