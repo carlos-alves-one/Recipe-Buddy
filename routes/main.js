@@ -475,7 +475,7 @@ module.exports = function (app, shopData) {
         let sqlquery =
           'INSERT INTO ingredients (username, ingred_name, value_per, unit, carbs, fats, protein, salt, sugar) VALUES (?,?,?,?,?,?,?,?,?)';
 
-        // store the data in a array
+        // sanitize and store the data in a array
         let newIngred = [
           loggedinuser,
           req.sanitize(req.body.ingred_name),
