@@ -1,0 +1,57 @@
+<!-- 
+Goldsmiths University of London
+Author....: Carlos Manuel de Oliveira Alves
+Student...: cdeol003
+Created...: 22/12/2022
+-->
+<!doctype html>
+<html>
+  <head>
+    <title>About <%=shopName%></title>
+    <link rel="stylesheet"  type="text/css" href="main.css" />
+  </head>
+  <html >
+    <head>
+      <title>Document</title>
+    </head>
+    <body bgcolor="PeachPuff">
+      <nav>
+        <ul>
+          <li><a href='./'>Home</a></li>
+          <li><a href="about">About</a></li>
+          <li><a href="register">Register</a></li>
+          <li><a href="login">Log In</a></li>
+          <li><a href="addFood">Add Food</a></li>
+          <li><a href="searchFood">Search Food</a></li>
+          <li><a href="updateFood">Update Food</a></li>
+          <li><a href="foodList">Food List</a></li>
+          <li><a href="logout">Log Out</a></li>
+        </ul>
+      </nav>
+      <h1>Update a <%=shopName%> Ingredient item</h1>
+        <form action="/foodadded" method="POST">
+            <label for="foodName">Food Name :</label>
+            <input type="text" id="ingred_name :" name="ingred_name" size="30" required><br><br>
+            <label for="value_per">Value per :</label>
+            <input type="number" id="value_per" name="value_per" type="number" step="0.01" value="100" required>
+            <select name="unit">
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+                <option value="ml">ml</option>
+                <option value="l">l</option>
+                <option value="unit">unit</option>
+            </select>
+            <label for="carbs">Carbs :</label>
+            <input type="number" id="carbs" name="carbs" required>
+            <label for="fats">Fats :</label>
+            <input type="number" id="fats" name="fats" required>
+            <label for="protein">Protein :</label>
+            <input type="number" id="protein" name="protein" required>
+            <label for="salt">Salt :</label>
+            <input type="number" id="salt" name="salt" required>
+            <label for="sugar">Sugar :</label>
+            <input type="number" id="sugar" name="sugar" required><br><br>
+            <input type="submit" value="Add Food">
+        </form>
+  </body>
+</html>
