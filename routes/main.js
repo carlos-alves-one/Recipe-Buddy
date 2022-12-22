@@ -512,7 +512,6 @@ module.exports = function (app, shopData) {
 
   // use the Express Router to handle our routes
   app.get('/searchFood', redirectLogin, function (req, res) {
-
     // render the search food page
     res.render('searchFood.ejs', shopData);
   });
@@ -521,15 +520,19 @@ module.exports = function (app, shopData) {
   app.get(
     '/searchFood-Result',
     // validate the input
-    [check('searchFood')
-    // use sanitize to trim the input
-    .trim()
-    //use sanitize to escape the input
-    .escape()
-    // validate the input is valid name
-    .isAlpha().withMessage('Please enter a valid name').isLength({ min: 3 }).withMessage('Name must be at least 3 characters long')
-  ],
-    
+    [
+      check('searchFood')
+        // use sanitize to trim the input
+        .trim()
+        //use sanitize to escape the input
+        .escape()
+        // validate the input is valid name
+        .isAlphanumeric()
+        .withMessage('Ingredient name must be alphanumeric')
+        .isLength({ min: 3 })
+        .withMessage('Name must be at least 3 characters long'),
+    ],
+
     function (req, res) {
       // store the errors in a variable
       const errors = validationResult(req);
@@ -544,21 +547,17 @@ module.exports = function (app, shopData) {
 
         // if there are no errors
       } else {
-
         // declare variable to store sql query
         let sqlquery =
-
-          "SELECT * FROM ingredients WHERE ingred_name LIKE '%" + 
-
+          "SELECT * FROM ingredients WHERE ingred_name LIKE '%" +
           // use sanitize to trim the input
-          req.sanitize(req.query.keyword) + "%'";
+          req.sanitize(req.query.keyword) +
+          "%'";
 
         // execute sql query
         db.query(sqlquery, (err, results) => {
-
           // if error
           if (err) {
-
             // print message
             console.log(err + ' ' + sqlquery);
 
@@ -567,9 +566,10 @@ module.exports = function (app, shopData) {
           }
           // if not error
           else {
-
             // define the data to pass to the view
-            let newData = Object.assign({}, shopData, { availableFoods: result });
+            let newData = Object.assign({}, shopData, {
+              availableFoods: result,
+            });
 
             // print message
             console.log(newData);
