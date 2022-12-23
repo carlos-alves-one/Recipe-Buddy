@@ -28,10 +28,13 @@ Created...: 22/12/2022
           <li><a href="logout">Log Out</a></li>
         </ul>
       </nav>
-      <h1>Update a <%=shopName%> Ingredient item</h1>
+      <h1><%=shopName%> Ingredient Item - Please Update :</h1>
         <form action="/foodadded" method="POST">
+
             <label for="foodName">Food Name :</label>
-            <input type="text" id="ingred_name :" name="ingred_name" size="30" required><br><br>
+            <input type="text" value="<%=availableIngredients[0].ingred_name%>" 
+            id="ingred_name :" name="ingred_name" size="30" required><br><br>
+
             <label for="value_per">Value per :</label>
             <input type="number" id="value_per" name="value_per" type="number" step="0.01" value="100" required>
             <select name="unit">
@@ -51,7 +54,7 @@ Created...: 22/12/2022
             <input type="number" id="salt" name="salt" required>
             <label for="sugar">Sugar :</label>
             <input type="number" id="sugar" name="sugar" required><br><br>
-            <input type="submit" value="Add Food">
+            <input type="submit" value="Update Food">
         </form>
   </body>
 </html>

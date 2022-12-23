@@ -629,7 +629,7 @@ module.exports = function (app, shopData) {
         // print message
         console.log('>>> ERROR: Please enter again the data');
 
-        // render the search food page
+        // render the update food page
         res.redirect('./updateFood-Search');
 
         // if there are no errors
@@ -674,7 +674,7 @@ module.exports = function (app, shopData) {
               console.log('>>> Ingredient searched successfully');
 
               // render the search food result page
-              res.render('updateFood.ejs', newData);
+              res.render('updateFood.ejs', newData, ingred_name_);
             }
           }
         });
