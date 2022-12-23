@@ -72,7 +72,14 @@ var lastname_ = '';
 var password_ = '';
 var passwordHash = '';
 var deletedUser = '';
-// var temp = '';
+var ingred_name = '';
+var value_per = '';
+var unit = '';
+var carbs = '';
+var fats = '';
+var protein = '';
+var salt = '';
+var sugar = '';
 
 // Requires the main.js file inside the routes folder passing in the Express app and data as arguments.  
 // All the routes will go in this file

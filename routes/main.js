@@ -567,22 +567,21 @@ module.exports = function (app, shopData) {
           // if not error
           else {
             // define the data to pass to the view
-            let newData = Object.assign({}, shopData, {availableIngredients: result});
+            let newData = Object.assign({}, shopData, {
+              availableIngredients: result,
+            });
 
             // print message
             console.log(newData);
 
             // check we have data
             if (newData.availableIngredients.length == 0) {
-
               // print message
               console.log('>>> Ingredient not found. Please try again');
 
               // render the search food page not found in the database
               res.render('searchFood-Null.ejs', newData);
-
             } else {
-
               // print message
               console.log('>>> Ingredient searched successfully');
 
@@ -599,6 +598,17 @@ module.exports = function (app, shopData) {
 
   // use the Express Router to handle our routes
   app.get('/updateFood-Search', redirectLogin, function (req, res) {
+    let db_items = {
+      ingred_name: '',
+      value_per: '',
+      unit: '',
+      carbs: '',
+      fats: '',
+      protein: '',
+      salt: '',
+      sugar: '',
+    };
+    
     // render the update food page
     res.render('updateFood-Search.ejs', shopData);
   });
@@ -654,58 +664,38 @@ module.exports = function (app, shopData) {
           // if not error
           else {
             // define the data to pass to the view
-            let newData = Object.assign({}, shopData, {availableIngredients: result});
+            let newData = Object.assign({}, shopData, {
+              availableIngredients: result,
+            });
 
             // print message
             console.log(newData);
 
             // check we have data
             if (newData.availableIngredients.length == 0) {
-
               // print message
               console.log('>>> Ingredient not found. Please try again');
 
               // render the search food page not found in the database
               res.render('searchFood-Null.ejs', newData);
-              
             } else {
-
               // print message
               console.log('>>> Ingredient searched successfully');
 
-              // render the search food result page
+              // render the update food page
               res.render('updateFood.ejs', newData);
 
-              // declare variables to store the data
-              let ingred_name = req.body.ingred_name;
-              let value_per = req.body.value_per;
-              let unit = req.body.unit;
-              let carbs = req.body.carbs;
-              let fats = req.body.fats;
-              let protein = req.body.protein;
-              let salt = req.body.salt;
-              let sugar = req.body.sugar;
-              
               // update query ingredient update
-              let sqlquery =
-                "UPDATE ingredients SET ingred_name = '" +
-                ingred_name +
-                value_per +
-                "', unit = '" +
-                unit +
-                "', carbs = '" +
-                carbs +
-                "', fats = '" +
-                fats +
-                "', protein = '" +
-                protein +
-                "', salt = '" +
-                salt +
-                "', sugar = '" +
-                sugar +
-                "' WHERE ingred_name = '" +
-                ingred_name +
-                "'";
+              let sqlquery = `UPDATE ingredients SET 
+              ingred_name = availableIngredients[0].ingred_name,
+              value_per_unit = '${req.body.value_per_unit}',
+              unit = '${req.body.unit}',
+              carbs = '${req.body.carbs}',
+              fats = '${req.body.fats}',
+              protein = '${req.body.protein}',
+              salt = '${req.body.salt}',
+              sugar = '${req.body.sugar}',
+              WHERE ingred_id = '${req.body.ingred_id}'`;
 
               // execute sql query to update the ingredient
               db.query(sqlquery, (err, result) => {
@@ -720,28 +710,12 @@ module.exports = function (app, shopData) {
                 // if not error
                 else {
                   // define the data to pass to the view
-                  let newData = Object.assign({}, shopData, {availableIngredients: result});
+                  let newData = Object.assign({}, shopData, {
+                    availableIngredients: result,
+                  });
 
                   // print message
                   console.log(newData);
-
-                  // check we have data
-                  if (newData.availableIngredients.length == 0) {
-
-                    // print message
-                    console.log('>>> Ingredient not updated. Please try again');
-
-                    // render the update food page null in the database
-                    res.render('updateFood-Null.ejs', newData);
-
-                  } else {
-
-                    // print message
-                    console.log('>>> Ingredient updated successfully');
-
-                    // render the update food result page
-                    res.render('updateFood-Result.ejs', newData);
-                  }
                 }
               });
             }
@@ -750,6 +724,6 @@ module.exports = function (app, shopData) {
       }
     }
   );
-  
+
   // end of module.exports
 };
