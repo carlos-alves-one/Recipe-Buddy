@@ -682,7 +682,7 @@ module.exports = function (app, shopData) {
               let unit = req.body.unit;
               let carbs = req.body.carbs;
               let fats = req.body.fats;
-              let proteins = req.body.proteins;
+              let protein = req.body.protein;
               let salt = req.body.salt;
               let sugar = req.body.sugar;
               
@@ -697,8 +697,8 @@ module.exports = function (app, shopData) {
                 carbs +
                 "', fats = '" +
                 fats +
-                "', proteins = '" +
-                proteins +
+                "', protein = '" +
+                protein +
                 "', salt = '" +
                 salt +
                 "', sugar = '" +
