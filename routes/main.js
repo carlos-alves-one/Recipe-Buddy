@@ -674,7 +674,10 @@ module.exports = function (app, shopData) {
               console.log('>>> Ingredient searched successfully');
 
               // render the search food result page
-              res.render('updateFood.ejs', newData, ingred_name_);
+              res.render('updateFood.ejs', newData);
+
+              // render the update food result page
+              res.render('updateFood-Result.ejs', shopData);
             }
           }
         });
