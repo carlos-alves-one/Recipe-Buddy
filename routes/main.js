@@ -630,7 +630,7 @@ module.exports = function (app, shopData) {
         console.log('>>> ERROR: Please enter again the data');
 
         // render the search food page
-        res.redirect('./searchFood');
+        res.redirect('./updateFood-Search');
 
         // if there are no errors
       } else {
