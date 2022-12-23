@@ -1,0 +1,45 @@
+<!-- 
+Goldsmiths University of London
+Author....: Carlos Manuel de Oliveira Alves
+Student...: cdeol003
+Created...: 23/12/2022
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>About <%=shopName%></title>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+  </head>
+  <html>
+    <head>
+      <title>Document</title>
+    </head>
+    <body bgcolor="PeachPuff">
+      <nav>
+        <ul>
+          <li><a href="./">Home</a></li>
+          <li><a href="about">About</a></li>
+          <li><a href="register">Register</a></li>
+          <li><a href="login">Log In</a></li>
+          <li><a href="addFood">Add Food</a></li>
+          <li><a href="searchFood">Search Food</a></li>
+          <li><a href="updateFood-Search">Update Food</a></li>
+          <li><a href="foodList">Food List</a></li>
+          <li><a href="logout">Log Out</a></li>
+        </ul>
+      </nav>
+      <h1>Update a <%=shopName%> Item</h1>
+      <form action="/searchFood-Result" method="GET">
+        <p>What ingredient do you want?</p>
+        <input
+          id="search-box"
+          type="text"
+          name="keyword"
+          value=""
+          placeholder="Ingredient name"
+        />
+        <input type="submit" value="Search" />
+      </form>
+    </body>
+  </html>
+</html>

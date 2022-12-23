@@ -598,9 +598,9 @@ module.exports = function (app, shopData) {
   // --->>> UPDATE FOOD ................................................................................................................................
 
   // use the Express Router to handle our routes
-  app.get('/searchFood', redirectLogin, function (req, res) {
+  app.get('/updateFood-Search', redirectLogin, function (req, res) {
     // render the update food page
-    res.render('searchFood.ejs', shopData);
+    res.render('updateFood-Search.ejs', shopData);
   });
 
   // use the Express Router to handle our routes
