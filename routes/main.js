@@ -676,8 +676,23 @@ module.exports = function (app, shopData) {
               // render the search food result page
               res.render('updateFood.ejs', newData);
 
+              // declare variables to store the data
+              let ingred_name = req.body.ingred_name;
+              let value_per = req.body.value_per;
+              let unit = req.body.unit;
+              let carbs = req.body.carbs;
+              let fats = req.body.fats;
+              let proteins = req.body.proteins;
+              let salt = req.body.salt;
+              let sugar = req.body.sugar;
+              
+
+
+
+
+
               // render the update food result page
-              res.render('updateFood-Result.ejs', shopData);
+              // res.render('updateFood-Result.ejs', shopData);
             }
           }
         });
