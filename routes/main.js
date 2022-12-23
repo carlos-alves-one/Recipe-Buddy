@@ -686,13 +686,64 @@ module.exports = function (app, shopData) {
               let salt = req.body.salt;
               let sugar = req.body.sugar;
               
+              // update query ingredient update
+              let sqlquery =
+                "UPDATE ingredients SET ingred_name = '" +
+                ingred_name +
+                value_per +
+                "', unit = '" +
+                unit +
+                "', carbs = '" +
+                carbs +
+                "', fats = '" +
+                fats +
+                "', proteins = '" +
+                proteins +
+                "', salt = '" +
+                salt +
+                "', sugar = '" +
+                sugar +
+                "' WHERE ingred_name = '" +
+                ingred_name +
+                "'";
 
+              // execute sql query to update the ingredient
+              db.query(sqlquery, (err, result) => {
+                // if error
+                if (err) {
+                  // print message
+                  console.log(err + ' ' + sqlquery);
 
+                  // throw error
+                  res.redirect('./');
+                }
+                // if not error
+                else {
+                  // define the data to pass to the view
+                  let newData = Object.assign({}, shopData, {availableIngredients: result});
 
+                  // print message
+                  console.log(newData);
 
+                  // check we have data
+                  if (newData.availableIngredients.length == 0) {
 
-              // render the update food result page
-              // res.render('updateFood-Result.ejs', shopData);
+                    // print message
+                    console.log('>>> Ingredient not updated. Please try again');
+
+                    // render the update food page null in the database
+                    res.render('updateFood-Null.ejs', newData);
+
+                  } else {
+
+                    // print message
+                    console.log('>>> Ingredient updated successfully');
+
+                    // render the update food result page
+                    res.render('updateFood-Result.ejs', newData);
+                  }
+                }
+              });
             }
           }
         });
