@@ -685,7 +685,17 @@ module.exports = function (app, shopData) {
   // --->>> UPDATE DB INGREDIENTS ................................................................................................................................
 
   // use the Express Router to handle our routes
-  app.get('/updateFood-Result', function (req, res) {
+  app.post('/updateFood-Result', function (req, res) {
+
+    // get data ingredient
+    var ingred_name = req.body.ingred_name;
+    var value_per = req.body.value_per;
+    var unit = req.body.unit;
+    var carbs = req.body.carbs;
+    var fats = req.body.fats;
+    var protein = req.body.protein;
+    var salt = req.body.salt;
+    var sugar = req.body.sugar;
 
     // update query ingredient update
     let sqlquery = `UPDATE ingredients SET ingred_name = ?, value_per = ?, unit = ?, 
