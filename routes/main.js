@@ -729,13 +729,12 @@ module.exports = function (app, shopData) {
 
         // print message
         console.log(newData);
+
+        // render the update food page
+        res.render('updateFood-Result.ejs', shopData);
       }
     });
-
-    // render the update food page
-    res.render('updateFood-Result.ejs', shopData);
   });
-
-
+  
   // end of module.exports
 };
