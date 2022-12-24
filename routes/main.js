@@ -598,7 +598,6 @@ module.exports = function (app, shopData) {
 
   // use the Express Router to handle our routes
   app.get('/updateFood-Search', function (req, res) {
-    
     // render the update food page
     res.render('updateFood-Search.ejs', shopData);
   });
@@ -674,7 +673,6 @@ module.exports = function (app, shopData) {
 
               // render update food page
               res.render('updateFood.ejs', newData);
-
             }
           }
         });
@@ -686,7 +684,6 @@ module.exports = function (app, shopData) {
 
   // use the Express Router to handle our routes
   app.post('/updateFood-Result', function (req, res) {
-
     // get data ingredient
     var ingred_name = req.body.ingred_name;
     var value_per = req.body.value_per;
@@ -698,8 +695,10 @@ module.exports = function (app, shopData) {
     var sugar = req.body.sugar;
 
     // update query ingredient update
-    let sqlquery = `UPDATE ingredients SET ingred_name = ?, value_per = ?, unit = ?, 
-    carbs = ?, fats = ?, protein = ?, salt = ?, sugar = ? WHERE ingred_name = ?`;
+    let sqlquery = `UPDATE ingredients SET ingred_name = "${ingred_name}", 
+    value_per = "${value_per}", unit = "${unit}", carbs = "${carbs}", 
+    fats = "${fats}", protein = "${protein}", salt = "${salt}", sugar = "${sugar}"
+    WHERE ingred_name = "${ingred_name}"`;
 
     let updateIngred = [
       req.sanitize(req.body.ingred_name),
@@ -710,7 +709,7 @@ module.exports = function (app, shopData) {
       req.sanitize(req.body.protein),
       req.sanitize(req.body.salt),
       req.sanitize(req.body.sugar),
-    ]
+    ];
 
     // execute sql query to update the ingredient
     db.query(sqlquery, updateIngred, (err, result) => {
