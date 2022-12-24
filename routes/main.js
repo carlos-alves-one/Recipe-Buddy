@@ -640,6 +640,9 @@ module.exports = function (app, shopData) {
           req.sanitize(req.query.keyword) +
           "%'";
 
+        // store keyword in a variable to be used with update food
+        ingred_name_keyword = req.sanitize(req.query.keyword);
+
         // execute sql query
         db.query(sqlquery, (err, result) => {
           // if error
@@ -698,7 +701,7 @@ module.exports = function (app, shopData) {
     let sqlquery = `UPDATE ingredients SET ingred_name = "${ingred_name_}", 
     value_per = "${value_per}", unit = "${unit}", carbs = "${carbs}", 
     fats = "${fats}", protein = "${protein}", salt = "${salt}", sugar = "${sugar}"
-    WHERE ingred_name = "${ingred_name}"`;
+    WHERE ingred_name = "${ingred_name_keyword}"`;
 
     let updateIngred = [
       req.sanitize(req.body.ingred_name_),
