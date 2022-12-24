@@ -597,17 +597,7 @@ module.exports = function (app, shopData) {
   // --->>> UPDATE FOOD ................................................................................................................................
 
   // use the Express Router to handle our routes
-  app.get('/updateFood-Search', redirectLogin, function (req, res) {
-    let db_items = {
-      ingred_name: '',
-      value_per: '',
-      unit: '',
-      carbs: '',
-      fats: '',
-      protein: '',
-      salt: '',
-      sugar: '',
-    };
+  app.get('/updateFood-Search', function (req, res) {
     
     // render the update food page
     res.render('updateFood-Search.ejs', shopData);
@@ -682,23 +672,34 @@ module.exports = function (app, shopData) {
               // print message
               console.log('>>> Ingredient searched successfully');
 
-              // render the update food page
-              res.render('updateFood.ejs', newData);
-
               // update query ingredient update
               let sqlquery = `UPDATE ingredients SET 
-              ingred_name = availableIngredients[0].ingred_name,
-              value_per_unit = '${req.body.value_per_unit}',
-              unit = '${req.body.unit}',
-              carbs = '${req.body.carbs}',
-              fats = '${req.body.fats}',
-              protein = '${req.body.protein}',
-              salt = '${req.body.salt}',
-              sugar = '${req.body.sugar}',
-              WHERE ingred_id = '${req.body.ingred_id}'`;
+                ingred_name = req.body.ingred_name,
+                value_per = req.body.value_per,
+                unit = req.body.unit,
+                carbs = req.body.carbs,
+                fats = req.body.fats,
+                protein = req.body.protein,
+                salt = req.body.salt,
+                sugar = req.body.sugar
+                WHERE ingred_name = req.body.ingred_name`;
+
+              let updateIngred = [
+                req.sanitize(req.body.ingred_name),
+                req.sanitize(req.body.value_per),
+                req.sanitize(req.body.unit),
+                req.sanitize(req.body.carbs),
+                req.sanitize(req.body.fats),
+                req.sanitize(req.body.protein),
+                req.sanitize(req.body.salt),
+                req.sanitize(req.body.sugar),
+              ]
+
+              // render the update food page
+              //res.render('updateFood.ejs', newData);
 
               // execute sql query to update the ingredient
-              db.query(sqlquery, (err, result) => {
+              db.query(sqlquery, updateIngred, (err, result) => {
                 // if error
                 if (err) {
                   // print message

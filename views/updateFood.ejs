@@ -32,10 +32,12 @@ Created...: 22/12/2022
         <form action="/foodList" method="GET">
             <label for="ingred_name">Food Name :</label>
             <input type="text" value="<%=availableIngredients[0].ingred_name%>" 
-            id="ingred_name :" name="ingred_name" size="30" required><br><br>
+            id="ingred_name :" name="ingred_name" size="30" required><br><br> 
+
             <label for="value_per">Value per :</label>
             <input type="number" value="<%=availableIngredients[0].value_per%>"
             id="value_per" name="value_per" type="number" step="0.01" required>
+
             <label for="unit">Unit :</label>
             <select name="unit">
                 <option value="g">g</option>
@@ -44,21 +46,27 @@ Created...: 22/12/2022
                 <option value="l">l</option>
                 <option value="unit">unit</option>
             </select>
+
             <label for="carbs">Carbs :</label>
             <input type="number" value="<%=availableIngredients[0].carbs%>"
             id="carbs" name="carbs" required>
+
             <label for="fats">Fats :</label>
             <input type="number" value="<%=availableIngredients[0].fats%>"
             id="fats" name="fats" required>
+
             <label for="protein">Protein :</label>
             <input type="number" value="<%=availableIngredients[0].protein%>"
             id="protein" name="protein" required>
+
             <label for="salt">Salt :</label>
             <input type="number" value="<%=availableIngredients[0].salt%>"
             id="salt" name="salt" required>
+
             <label for="sugar">Sugar :</label>
             <input type="number" value="<%=availableIngredients[0].sugar%>"
             id="sugar" name="sugar" required><br><br>
+
             <input type="submit" value="Update Food">
         </form>
   </body>
