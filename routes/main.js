@@ -718,7 +718,7 @@ module.exports = function (app, shopData) {
         console.log(err + ' ' + sqlquery);
 
         // throw error
-        res.redirect('./');
+        res.render('updateFood-Null.ejs', shopData);
       }
       // if not error
       else {
@@ -735,6 +735,6 @@ module.exports = function (app, shopData) {
       }
     });
   });
-  
+
   // end of module.exports
 };
