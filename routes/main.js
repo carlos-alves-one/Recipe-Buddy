@@ -586,7 +586,7 @@ module.exports = function (app, shopData) {
               console.log('>>> Ingredient searched successfully');
 
               // render the search food result page
-              res.render('searchFood-Result.ejs', newData);
+              //res.render('searchFood-Result.ejs', newData);
             }
           }
         });
@@ -671,6 +671,9 @@ module.exports = function (app, shopData) {
             } else {
               // print message
               console.log('>>> Ingredient searched successfully');
+
+              // render update food page
+              res.render('updateFood.ejs', newData);
 
             }
           }
