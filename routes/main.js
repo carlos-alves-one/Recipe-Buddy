@@ -688,16 +688,8 @@ module.exports = function (app, shopData) {
   app.get('/updateFood-Result', function (req, res) {
 
     // update query ingredient update
-    let sqlquery = `UPDATE ingredients SET 
-    ingred_name = req.body.ingred_name,
-    value_per = req.body.value_per,
-    unit = req.body.unit,
-    carbs = req.body.carbs,
-    fats = req.body.fats,
-    protein = req.body.protein,
-    salt = req.body.salt,
-    sugar = req.body.sugar
-    WHERE ingred_name = req.body.ingred_name`;
+    let sqlquery = `UPDATE ingredients SET ingred_name = ?, value_per = ?, unit = ?, 
+    carbs = ?, fats = ?, protein = ?, salt = ?, sugar = ? WHERE ingred_name = ?`;
 
     let updateIngred = [
       req.sanitize(req.body.ingred_name),
@@ -715,6 +707,7 @@ module.exports = function (app, shopData) {
       // if error
       if (err) {
         // print message
+        console.log('>>> Ingredient not updated. Please try again');
         console.log(err + ' ' + sqlquery);
 
         // throw error
