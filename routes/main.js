@@ -672,59 +672,67 @@ module.exports = function (app, shopData) {
               // print message
               console.log('>>> Ingredient searched successfully');
 
-              // update query ingredient update
-              let sqlquery = `UPDATE ingredients SET 
-                ingred_name = req.body.ingred_name,
-                value_per = req.body.value_per,
-                unit = req.body.unit,
-                carbs = req.body.carbs,
-                fats = req.body.fats,
-                protein = req.body.protein,
-                salt = req.body.salt,
-                sugar = req.body.sugar
-                WHERE ingred_name = req.body.ingred_name`;
-
-              let updateIngred = [
-                req.sanitize(req.body.ingred_name),
-                req.sanitize(req.body.value_per),
-                req.sanitize(req.body.unit),
-                req.sanitize(req.body.carbs),
-                req.sanitize(req.body.fats),
-                req.sanitize(req.body.protein),
-                req.sanitize(req.body.salt),
-                req.sanitize(req.body.sugar),
-              ]
-
-              // render the update food page
-              //res.render('updateFood.ejs', newData);
-
-              // execute sql query to update the ingredient
-              db.query(sqlquery, updateIngred, (err, result) => {
-                // if error
-                if (err) {
-                  // print message
-                  console.log(err + ' ' + sqlquery);
-
-                  // throw error
-                  res.redirect('./');
-                }
-                // if not error
-                else {
-                  // define the data to pass to the view
-                  let newData = Object.assign({}, shopData, {
-                    availableIngredients: result,
-                  });
-
-                  // print message
-                  console.log(newData);
-                }
-              });
             }
           }
         });
       }
     }
   );
+
+  // --->>> UPDATE DB INGREDIENTS ................................................................................................................................
+
+  // use the Express Router to handle our routes
+  app.get('/updateFood-Result', function (req, res) {
+
+    // update query ingredient update
+    let sqlquery = `UPDATE ingredients SET 
+    ingred_name = req.body.ingred_name,
+    value_per = req.body.value_per,
+    unit = req.body.unit,
+    carbs = req.body.carbs,
+    fats = req.body.fats,
+    protein = req.body.protein,
+    salt = req.body.salt,
+    sugar = req.body.sugar
+    WHERE ingred_name = req.body.ingred_name`;
+
+    let updateIngred = [
+      req.sanitize(req.body.ingred_name),
+      req.sanitize(req.body.value_per),
+      req.sanitize(req.body.unit),
+      req.sanitize(req.body.carbs),
+      req.sanitize(req.body.fats),
+      req.sanitize(req.body.protein),
+      req.sanitize(req.body.salt),
+      req.sanitize(req.body.sugar),
+    ]
+
+    // execute sql query to update the ingredient
+    db.query(sqlquery, updateIngred, (err, result) => {
+      // if error
+      if (err) {
+        // print message
+        console.log(err + ' ' + sqlquery);
+
+        // throw error
+        res.redirect('./');
+      }
+      // if not error
+      else {
+        // define the data to pass to the view
+        let newData = Object.assign({}, shopData, {
+          availableIngredients: result,
+        });
+
+        // print message
+        console.log(newData);
+      }
+    });
+
+    // render the update food page
+    res.render('updateFood-Result.ejs', shopData);
+  });
+
 
   // end of module.exports
 };
