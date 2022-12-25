@@ -633,12 +633,26 @@ module.exports = function (app, shopData) {
 
         // if there are no errors
       } else {
-        // declare variable to store sql query
-        let sqlquery =
-          "SELECT * FROM ingredients WHERE ingred_name LIKE '%" +
-          // use sanitize to trim the input
-          req.sanitize(req.query.keyword) +
-          "%'";
+
+        // check if selected box was selected
+        if (req.query.checkbox == 'on') {
+          // declare variable to store sql query with direct match
+          var sqlquery =
+            "SELECT * FROM ingredients WHERE ingred_name = '" +
+            // use sanitize to trim the input
+            req.sanitize(req.query.keyword) +
+            "'";
+
+        // if selected box was not selected
+        } else {
+
+          // declare variable to store sql query
+          var sqlquery =
+            "SELECT * FROM ingredients WHERE ingred_name LIKE '%" +
+            // use sanitize to trim the input
+            req.sanitize(req.query.keyword) +
+            "%'";
+        }
 
         // store keyword in a variable to be used with update food
         ingred_name_keyword = req.sanitize(req.query.keyword);
