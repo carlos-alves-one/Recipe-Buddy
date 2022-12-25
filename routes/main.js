@@ -632,67 +632,73 @@ module.exports = function (app, shopData) {
         res.redirect('./updateFood-Search');
 
         // if there are no errors
-      } else {
+      } 
 
-        // check if selected box was selected
-        if (req.query.checkbox == 'on') {
-          // declare variable to store sql query with direct match
-          var sqlquery =
-            "SELECT * FROM ingredients WHERE ingred_name = '" +
-            // use sanitize to trim the input
-            req.sanitize(req.query.keyword) +
-            "'";
+      // check if selected box was selected
+      if (req.body.checkbox == 'on') {
+        // declare variable to store sql query with direct match
+        var sqlquery =
+          "SELECT * FROM ingredients WHERE ingred_name = '" +
+          // use sanitize to trim the input
+          req.sanitize(req.query.keyword) +
+          "'";
+          // print message
+          console.log('>>> Selected box was selected');
+          console.log(sqlquery);
 
-        // if selected box was not selected
-        } else {
+      // if selected box was not selected
+      } else{
 
-          // declare variable to store sql query
-          var sqlquery =
-            "SELECT * FROM ingredients WHERE ingred_name LIKE '%" +
-            // use sanitize to trim the input
-            req.sanitize(req.query.keyword) +
-            "%'";
+        // declare variable to store sql query
+        var sqlquery =
+          "SELECT * FROM ingredients WHERE ingred_name LIKE '%" +
+          // use sanitize to trim the input
+          req.sanitize(req.query.keyword) +
+          "%'";
+          // print message
+          console.log('>>> Selected box was not selected');
+          console.log(sqlquery);
+      }
+
+      // store keyword in a variable to be used with update food
+      ingred_name_keyword = req.sanitize(req.query.keyword);
+
+      // execute sql query
+      db.query(sqlquery, (err, result) => {
+        // if error
+        if (err) {
+          // print message
+          console.log(err + ' ' + sqlquery);
+
+          // throw error
+          res.redirect('./');
         }
+        // if not error
+        else {
+          // define the data to pass to the view
+          let newData = Object.assign({}, shopData, {
+            availableIngredients: result,
+          });
 
-        // store keyword in a variable to be used with update food
-        ingred_name_keyword = req.sanitize(req.query.keyword);
+          // print message
+          console.log(newData);
 
-        // execute sql query
-        db.query(sqlquery, (err, result) => {
-          // if error
-          if (err) {
+          // check we have data
+          if (newData.availableIngredients.length == 0) {
             // print message
-            console.log(err + ' ' + sqlquery);
+            console.log('>>> Ingredient not found. Please try again');
 
-            // throw error
-            res.redirect('./');
-          }
-          // if not error
-          else {
-            // define the data to pass to the view
-            let newData = Object.assign({}, shopData, {
-              availableIngredients: result,
-            });
-
+            // render the search food page not found in the database
+            res.render('searchFood-Null.ejs', newData);
+          } else {
             // print message
-            console.log(newData);
+            console.log('>>> Ingredient searched successfully');
 
-            // check we have data
-            if (newData.availableIngredients.length == 0) {
-              // print message
-              console.log('>>> Ingredient not found. Please try again');
-
-              // render the search food page not found in the database
-              res.render('searchFood-Null.ejs', newData);
-            } else {
-              // print message
-              console.log('>>> Ingredient searched successfully');
-
-              // render update food page
-              res.render('updateFood.ejs', newData);
-            }
+            // render update food page
+            res.render('updateFood.ejs', newData);
           }
-        });
+        }
+      });
       }
     }
   );
