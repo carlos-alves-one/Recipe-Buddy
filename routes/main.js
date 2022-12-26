@@ -961,9 +961,26 @@ module.exports = function (app, shopData) {
                   let deleteIngred = [req.sanitize(req.body.ingred_name_)];
 
                   // execute sql query to delete the food
+                  db.query(sqlquery, (err, result) => {
+                    // if error
+                    if (err) {
+                      // print message
+                      console.log('>>> Ingredient not deleted. Please try again');
+                      console.log(err + ' ' + sqlquery);
 
+                      // throw error
+                      res.render('deleteFood-Null.ejs', shopData);
+                    }
+                    // if not error
+                    else {
+                      // define the data to pass to the view
+                      let newData = Object.assign({}, shopData, {
+                        availableIngredients: result,
+                      });
 
-
+                      // print message
+                      console.log(newData
+                });
               }
             }
         });
