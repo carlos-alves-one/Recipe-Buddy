@@ -941,7 +941,7 @@ module.exports = function (app, shopData) {
                 console.log('>>> Ingredient not found. Please try again');
 
                 // render the search food page not found in the database
-                res.render('deleteFood-Null.ejs', newData);
+                res.render('searchFood-Null.ejs', newData);
               } else {
                 // print message
                 console.log('>>> Ingredient searched successfully');
