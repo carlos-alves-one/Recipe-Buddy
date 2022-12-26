@@ -973,18 +973,20 @@ module.exports = function (app, shopData) {
                     }
                     // if not error
                     else {
-                      // define the data to pass to the view
-                      let newData = Object.assign({}, shopData, {
-                        availableIngredients: result,
-                      });
+                      // render the user deleted page
+                      res.render('userDeleted.ejs', shopData);
 
-                      // print message
-                      console.log(newData
-                });
-              }
+                      // print the message
+                      console.log(
+                        '>>> The ingredient ' + req.body.keyword + ' has been deleted'
+                      );
+                    }
+                  });
+              });
             }
+          }
         });
-      }
+      };
     }
   );
 
