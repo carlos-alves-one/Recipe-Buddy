@@ -911,9 +911,6 @@ module.exports = function (app, shopData) {
           // use sanitize to trim the input
           req.sanitize(req.query.keyword) +
           "'";
-
-          // store keyword in a variable to be used with update food
-          ingred_name_keyword = req.sanitize(req.query.keyword);
           
           // execute sql query
           db.query(sqlquery, (err, result) => {
@@ -948,6 +945,25 @@ module.exports = function (app, shopData) {
 
                 // render the search food result page
                 res.render('deleteFood-Result.ejs', newData);
+
+                // if submit button is clicked
+                app.post('/deleteFood-Confirm', function (req, res) {
+
+                  // print message
+                  console.log('>>> Delete request received');
+
+                  // get data food
+                  var ingred_name_ = req.body.ingred_name;
+
+                  // delete query food
+                  let sqlquery = `DELETE FROM ingredients WHERE ingred_name = "${ingred_name_}"`;
+
+                  let deleteIngred = [req.sanitize(req.body.ingred_name_)];
+
+                  // execute sql query to delete the food
+
+
+
               }
             }
         });
