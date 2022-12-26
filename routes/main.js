@@ -861,5 +861,15 @@ module.exports = function (app, shopData) {
     });
   });
 
+  // --->>> DELETE FOOD ................................................................................................................................
+
+  // use the Express Router to handle our routes
+  app.get('/deleteFood', function (req, res) {
+    // render the search food page
+    res.render('deleteFood.ejs', shopData);
+  });
+
+  
+
   // end of module.exports
 };
