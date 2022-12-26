@@ -548,10 +548,6 @@ module.exports = function (app, shopData) {
         // if there are no errors
       } else {
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-
-        
-
         // declare variable to store sql query
         let sqlquery =
           "SELECT * FROM ingredients WHERE ingred_name LIKE '%" +
