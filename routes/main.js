@@ -869,7 +869,91 @@ module.exports = function (app, shopData) {
     res.render('deleteFood.ejs', shopData);
   });
 
-  
+  // use the Express Router to handle our routes
+  app.get(
+    '/deleteFood-Result',
+    // validate the input
+    [
+      check('keyword')
+        // use sanitize to trim the input
+        .trim()
+        //use sanitize to escape the input
+        .escape()
+        // validate the input is valid name
+        .isAlphanumeric()
+        .withMessage('Ingredient name must be alphanumeric')
+        .isLength({ min: 3 })
+        .withMessage('Name must be at least 3 characters long'),
+    ],
+
+    function (req, res) {
+      // store the errors in a variable
+      const errors = validationResult(req);
+
+      // if there are errors
+      if (!errors.isEmpty()) {
+        // print message
+        console.log('>>> ERROR: Please enter again the data');
+
+        // render the search food page
+        res.redirect('./deleteFood');
+
+        // if there are no errors
+      } else {
+
+        // print message
+        console.log('>>> Checkbox is checked');
+
+        // declare variable to store sql query
+        let sqlquery =
+          // select with direct match only
+          "SELECT * FROM ingredients WHERE ingred_name = '" +
+          // use sanitize to trim the input
+          req.sanitize(req.query.keyword) +
+          "'";
+
+          // store keyword in a variable to be used with update food
+          ingred_name_keyword = req.sanitize(req.query.keyword);
+          
+          // execute sql query
+          db.query(sqlquery, (err, result) => {
+            // if error
+            if (err) {
+              // print message
+              console.log(err + ' ' + sqlquery);
+
+              // throw error
+              res.redirect('./');
+            }
+            // if not error
+            else {
+              // define the data to pass to the view
+              let newData = Object.assign({}, shopData, {
+                availableIngredients: result,
+              });
+
+              // print message
+              console.log(newData);
+
+              // check we have data
+              if (newData.availableIngredients.length == 0) {
+                // print message
+                console.log('>>> Ingredient not found. Please try again');
+
+                // render the search food page not found in the database
+                res.render('deleteFood-Null.ejs', newData);
+              } else {
+                // print message
+                console.log('>>> Ingredient searched successfully');
+
+                // render the search food result page
+                res.render('deleteFood-Result.ejs', newData);
+              }
+            }
+        });
+      }
+    }
+  );
 
   // end of module.exports
 };
