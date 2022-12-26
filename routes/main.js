@@ -595,8 +595,8 @@ module.exports = function (app, shopData) {
                   // print message
                   console.log('>>> Ingredient searched successfully');
   
-                  // render update food page
-                  res.render('updateFood.ejs', newData);
+                  // render the search food result page
+                  res.render('searchFood-Result.ejs', newData);
                 }
               }
           });
