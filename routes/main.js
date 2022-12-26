@@ -548,49 +548,108 @@ module.exports = function (app, shopData) {
         // if there are no errors
       } else {
 
-        // declare variable to store sql query
-        let sqlquery =
-          "SELECT * FROM ingredients WHERE ingred_name LIKE '%" +
-          // use sanitize to trim the input
-          req.sanitize(req.query.keyword) +
-          "%'";
+        // check if checkbox is checked
+        if (req.query.checkbox == 'on') {
+          // print message
+          console.log('>>> Checkbox is checked');
 
-        // execute sql query
-        db.query(sqlquery, (err, result) => {
-          // if error
-          if (err) {
-            // print message
-            console.log(err + ' ' + sqlquery);
+          // declare variable to store sql query
+          let sqlquery =
+            // select with direct match only
+            "SELECT * FROM ingredients WHERE ingred_name = '" +
+            // use sanitize to trim the input
+            req.sanitize(req.query.keyword) +
+            "'";
 
-            // throw error
-            res.redirect('./');
-          }
-          // if not error
-          else {
-            // define the data to pass to the view
-            let newData = Object.assign({}, shopData, {
-              availableIngredients: result,
-            });
+            // store keyword in a variable to be used with update food
+            ingred_name_keyword = req.sanitize(req.query.keyword);
+            
+            // execute sql query
+            db.query(sqlquery, (err, result) => {
+              // if error
+              if (err) {
+                // print message
+                console.log(err + ' ' + sqlquery);
+  
+                // throw error
+                res.redirect('./');
+              }
+              // if not error
+              else {
+                // define the data to pass to the view
+                let newData = Object.assign({}, shopData, {
+                  availableIngredients: result,
+                });
+  
+                // print message
+                console.log(newData);
+  
+                // check we have data
+                if (newData.availableIngredients.length == 0) {
+                  // print message
+                  console.log('>>> Ingredient not found. Please try again');
+  
+                  // render the search food page not found in the database
+                  res.render('searchFood-Null.ejs', newData);
+                } else {
+                  // print message
+                  console.log('>>> Ingredient searched successfully');
+  
+                  // render update food page
+                  res.render('updateFood.ejs', newData);
+                }
+              }
+          });
 
-            // print message
-            console.log(newData);
+          // check if checkbox is not checked
+        } else if(req.query.checkbox == undefined) {
+          // print message
+          console.log('>>> Checkbox is not checked');
 
-            // check we have data
-            if (newData.availableIngredients.length == 0) {
+          // declare variable to store sql query
+          let sqlquery =
+            "SELECT * FROM ingredients WHERE ingred_name LIKE '%" +
+            // use sanitize to trim the input
+            req.sanitize(req.query.keyword) +
+            "%'";
+
+            // execute sql query
+          db.query(sqlquery, (err, result) => {
+            // if error
+            if (err) {
               // print message
-              console.log('>>> Ingredient not found. Please try again');
+              console.log(err + ' ' + sqlquery);
 
-              // render the search food page not found in the database
-              res.render('searchFood-Null.ejs', newData);
-            } else {
-              // print message
-              console.log('>>> Ingredient searched successfully');
-
-              // render the search food result page
-              res.render('searchFood-Result.ejs', newData);
+              // throw error
+              res.redirect('./');
             }
-          }
+            // if not error
+            else {
+              // define the data to pass to the view
+              let newData = Object.assign({}, shopData, {
+                availableIngredients: result,
+              });
+
+              // print message
+              console.log(newData);
+
+              // check we have data
+              if (newData.availableIngredients.length == 0) {
+                // print message
+                console.log('>>> Ingredient not found. Please try again');
+
+                // render the search food page not found in the database
+                res.render('searchFood-Null.ejs', newData);
+              } else {
+                // print message
+                console.log('>>> Ingredient searched successfully');
+
+                // render the search food result page
+                res.render('searchFood-Result.ejs', newData);
+              }
+            }
         });
+        }
       }
     }
   );
