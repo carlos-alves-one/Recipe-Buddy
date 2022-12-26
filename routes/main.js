@@ -511,7 +511,7 @@ module.exports = function (app, shopData) {
   // --->>> SEARCH FOOD ................................................................................................................................
 
   // use the Express Router to handle our routes
-  app.get('/searchFood', redirectLogin, function (req, res) {
+  app.get('/searchFood', function (req, res) {
     // render the search food page
     res.render('searchFood.ejs', shopData);
   });
@@ -748,7 +748,7 @@ module.exports = function (app, shopData) {
     }
   );
 
-  // --->>> UPDATE DB INGREDIENTS ................................................................................................................................
+  // --->>> UPDATE DATABASE INGREDIENTS ................................................................................................................................
 
   // use the Express Router to handle our routes
   app.post('/updateFood-Result', function (req, res) {
