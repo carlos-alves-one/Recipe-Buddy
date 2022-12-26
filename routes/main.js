@@ -901,9 +901,6 @@ module.exports = function (app, shopData) {
         // if there are no errors
       } else {
 
-        // print message
-        console.log('>>> Checkbox is checked');
-
         // declare variable to store sql query
         let sqlquery =
           // select with direct match only
@@ -938,7 +935,7 @@ module.exports = function (app, shopData) {
                 console.log('>>> Ingredient not found. Please try again');
 
                 // render the search food page not found in the database
-                res.render('searchFood-Null.ejs', newData);
+                res.render('deleteFood-Null.ejs', newData);
               } else {
                 // print message
                 console.log('>>> Ingredient searched successfully');
@@ -946,43 +943,43 @@ module.exports = function (app, shopData) {
                 // render the search food result page
                 res.render('deleteFood-Result.ejs', newData);
 
-                // if submit button is clicked
-                app.post('/deleteFood-Confirm', function (req, res) {
+              //   // // if submit button is clicked
+              //   // app.get('/deleteFood-Confirm', function (req, res) {
 
-                  // print message
-                  console.log('>>> Delete request received');
+              //   // // print message
+              //   // console.log('>>> Delete request received');
 
-                  // get data food
-                  var ingred_name_ = req.body.ingred_name;
+              //   // // get data food
+              //   // var ingred_name_ = req.body.ingred_name;
 
-                  // delete query food
-                  let sqlquery = `DELETE FROM ingredients WHERE ingred_name = "${ingred_name_}"`;
+              //   // // delete query food
+              //   // let sqlquery = `DELETE FROM ingredients WHERE ingred_name = "${ingred_name_}"`;
 
-                  let deleteIngred = [req.sanitize(req.body.ingred_name_)];
+              //   // let deleteIngred = [req.sanitize(req.body.ingred_name_)];
 
-                  // execute sql query to delete the food
-                  db.query(sqlquery, (err, result) => {
-                    // if error
-                    if (err) {
-                      // print message
-                      console.log('>>> Ingredient not deleted. Please try again');
-                      console.log(err + ' ' + sqlquery);
+              //   // // execute sql query to delete the food
+              //   // db.query(sqlquery, (err, result) => {
+              //   //   // if error
+              //   //   if (err) {
+              //   //     // print message
+              //   //     console.log('>>> Ingredient not deleted. Please try again');
+              //   //     console.log(err + ' ' + sqlquery);
 
-                      // throw error
-                      res.render('deleteFood-Null.ejs', shopData);
-                    }
-                    // if not error
-                    else {
-                      // render the user deleted page
-                      res.render('userDeleted.ejs', shopData);
+              //   //     // throw error
+              //   //     res.render('deleteFood-Null.ejs', shopData);
+              //   //   }
+              //   //   // if not error
+              //   //   else {
+              //   //     // render the delete food confirm page
+              //   //     res.render('deleteFood-Confirm.ejs', shopData);
 
-                      // print the message
-                      console.log(
-                        '>>> The ingredient ' + req.body.keyword + ' has been deleted'
-                      );
-                    }
-                  });
-              });
+              //   //     // print the message
+              //   //     console.log(
+              //   //       '>>> The ingredient ' + req.body.keyword + ' has been deleted'
+              //   //     );
+              //   //   }
+              //   // });
+              // });
             }
           }
         });
@@ -990,5 +987,5 @@ module.exports = function (app, shopData) {
     }
   );
 
-  // end of module.exports
+// end of module.exports
 };
