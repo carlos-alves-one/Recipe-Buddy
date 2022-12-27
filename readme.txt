@@ -51,19 +51,19 @@ Home >> R1: Home page - routes/main.js line No.32-36 - views/index.ejs
 
         R1A: Display the name of the web application - views/about.ejs
 
-	  R1B: Display links to other pages or a navigation bar that contains links to other pages: *.ejs
+	R1B: Display links to other pages or a navigation bar that contains links to other pages: *.ejs
 	
 About >> R2: About page - routes/main.js line No.38-41 - views/about.ejs
 
          R2A: Display information about the web application including your name as the developer.  
-		  Display a link to the home page or a navigation bar that contains links to other pages.
+	      Display a link to the home page or a navigation bar that contains links to other pages.
 
 Register >> R3: Register page - routes/main.js line No.43-228 - views/register.ejs
 
 		R3B:  Collect form data to be passed to the back-end (database) and store user data in the database.
 		      Each user data consists of the following fields: first name, last name, email address, username 
-			and password. To provide security of data in storage, a hashed password should only be saved in 
-			the database, not a plain password - routes/main.js line No.77-228
+		      and password. To provide security of data in storage, a hashed password should only be saved in 
+		      the database, not a plain password - routes/main.js line No.77-228
 
 		R3C: Display a message indicating that add operation has been done - views/newUser.ejs
 
@@ -71,17 +71,17 @@ Login >> R4: Login page - routes/main.js line No.230-322
 
 	   R4A: Display a form to users to log in to the dynamic web application.
 	        The form should consist of the following items: username and password.  
-              Display a link to the home page or a navigation bar that contains links to other pages.
-		  routes/main.js line No.232-236 - views/login.ejs
+                Display a link to the home page or a navigation bar that contains links to other pages.
+		routes/main.js line No.232-236 - views/login.ejs
 
 	   R4B: Collect form data to be checked against data stored for each registered user in the database. 
               Users are logged in if and only if both username and password are correct. 
               routes/main.js line No.238-322 - views/loggedin.ejs
 	
 	   R4C: Display a message indicating whether login is successful or not and why not successful.
-		  routes/main.js line No.282-306 - views/loggedin.ejs (successful) 
+		routes/main.js line No.282-306 - views/loggedin.ejs (successful) 
 	        views/wrongKey.ejs (invalid password)
-              views/loggedout.ejs (invalid username)
+                views/loggedout.ejs (invalid username)
 
 Logout >> R5: Logout page - routes/main.js line No.324-334
 
@@ -104,9 +104,9 @@ Search Food >> R7: Search food page - routes/main.js line No.517-661
         	   Display a link to the home page or a navigation bar that contains links to other pages.
 		   routes/main.js line No.519-523 - views/searchFood.ejs
 
-		   R7B:  Collect form data to be passed to the back-end (database) and search the database based on the food name collected from the form. 
-               If food found, display a template file (ejs, pug, etc) including data related to the food found in the database to users. 
-               Display a message to the user, if not found.
+		   R7B: Collect form data to be passed to the back-end (database) and search the database based on the food name collected from the form. 
+                   If food found, display a template file (ejs, pug, etc) including data related to the food found in the database to users. 
+                   Display a message to the user, if not found.
 		   routes/main.js line No.525-661
 		   views/searchFood-Result.ejs (db query successfully)
 		   views/searchFood-Null.ejs (db query not successful)
@@ -123,17 +123,17 @@ Update Food >> R8: Update food page (only available to logged-in users) - routes
 		   R8B: If food found, display all data related to the food found in the database to users in forms 
 		   so users can update each field. Display a message to the user if not found. 
 		   routes/main.js line No.671-868
-	         views/updateFood.ejs (db query successfully)
-               views/searchFood-Null.ejs (db query not successful)
+	           views/updateFood.ejs (db query successfully)
+                   views/searchFood-Null.ejs (db query not successful)
 		   
 		   Collect form data to be passed to the back-end (database) and store updated food items in 
 		   the database - routes/main.js line No.812-868 - views/updateFood-Result.ejs (db query successfully)
-               views/updateFood-Null.ejs (db query not successful)
+                   views/updateFood-Null.ejs (db query not successful)
 
 Delete Food >> R8C: Delete food page - routes/main.js line No.870-998
 
 		   Implement a delete button to delete the whole record, when the delete button is pressed, it is 
-	         good practice to ask 'Are you sure?' and then delete the food item from the database,
+	           good practice to ask 'Are you sure?' and then delete the food item from the database,
 		   and display a message indicating the delete has been done. 
 
 		   Step 1 - search food to delete - routes/main.js line No.872-877 - views/deleteFood.ejs
@@ -145,24 +145,24 @@ Delete Food >> R8C: Delete food page - routes/main.js line No.870-998
 Food List >> R9: List food page (available to all users) - routes/main.js line No.336-361 - views/foodList.ejs
  
 		 R9A: Display all fields for all foods stored in the database. Display a link to the home page or 
-             a navigation bar that contains links to other pages. 
+                 a navigation bar that contains links to other pages. 
 
 		 R9C: going beyond by letting users select some food items (e.g. by displaying a checkbox next to 
-             each food item and letting the user input the amount of each food item in the recipe e.g. 2x100 g 
-             flour). Then collect the name of all selected foods and calculate the sum of the nutritional 
-             information related to all selected food items for a recipe or a meal and display them as 
-             ‘nutritional information of a recipe or a meal’. Please note, it is not necessary to store recipes 
-             or meals in the database
+                 each food item and letting the user input the amount of each food item in the recipe e.g. 2x100 g 
+                 flour). Then collect the name of all selected foods and calculate the sum of the nutritional 
+                 information related to all selected food items for a recipe or a meal and display them as 
+                 ‘nutritional information of a recipe or a meal’. Please note, it is not necessary to store recipes 
+                 or meals in the database
              
-             Note: Requirement not done due to time constraint.
+                 Note: Requirement not done due to time constraint.
 
 API >>  R10: API There is a basic API displayed on '/api' route listing all foods stored in the database in 
         JSON format. i.e. food content can also be accessed as JSON via HTTP method, It should be clear 
         how to access the API - http://doc.gold.ac.uk/usr/184/api
-	  routes/main.js line No.1000-1014
+	routes/main.js line No.1000-1014
 
-	  Additional credit will be given for an API that implements get, post, put and delete.
-	  routes/main.js line No.1016-1077
+	Additional credit will be given for an API that implements get, post, put and delete.
+	routes/main.js line No.1016-1077
 
 Form validation >> R11: All form data should have validations, examples include checking password length, 
 			 email validation, integer data is integer and etc.
@@ -177,7 +177,7 @@ Form validation >> R11: All form data should have validations, examples include 
   			 . check the password must be 8+ chars long and contain a number
 			 . use sanitize to trim the password
 			 . use sanitize to escape the password, username, ingredient name
-		       . use sanitize to remove any special characters
+		         . use sanitize to remove any special characters
 		    	 . check we have an invalid password length
 			 . check username is different from password
 			 . hash the password
