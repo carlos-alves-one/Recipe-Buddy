@@ -863,48 +863,14 @@ module.exports = function (app, shopData) {
 
   // --->>> DELETE FOOD ................................................................................................................................
 
+  // step 1 - search food to delete
   // use the Express Router to handle our routes
   app.get('/deleteFood', function (req, res) {
     // render the search food page
     res.render('deleteFood.ejs', shopData);
   });
 
-  // use the Express Router to handle our routes
-  app.get('/deleteFood-Confirm', function (req, res) {
-    // get data ingredient
-    var ingred_name_ = req.body.ingred_name;
-
-    // delete query ingredient
-    let sqlquery = `DELETE FROM ingredients WHERE ingred_name = "${ingred_name_}"`;
-    // sanitize the input
-    let deleteIngred = [req.sanitize(req.body.ingred_name_)];
-    // execute sql query to delete the ingredient
-    db.query(sqlquery, deleteIngred, (err, result) => {
-      // if error
-      if (err) {
-        // print message
-        console.log('>>> Ingredient not deleted. Please try again');
-        console.log(err + ' ' + sqlquery);
-
-        // throw error
-        res.render('deleteFood-Null.ejs', shopData);
-
-        // if not error
-      } else {
-        // print message
-        console.log('>>> Ingredient to delete: ' + ingred_name_);
-
-        // define the data to pass to the view
-        let newData = Object.assign({}, shopData, {
-          availableIngredients: result,
-        });
-
-        // render the delete food confirm page
-        res.render('deleteFood-Confirm.ejs', shopData);
-      }
-    });
-  });
-  
+  // step 2 - return search results
   // use the Express Router to handle our routes
   app.get(
     '/deleteFood-Result',
@@ -945,6 +911,9 @@ module.exports = function (app, shopData) {
           req.sanitize(req.query.keyword) +
           "'";
           
+          // store keyword in a variable to be used with delete food
+          ingred_name_keyword = req.sanitize(req.query.keyword);
+
           // execute sql query
           db.query(sqlquery, (err, result) => {
             // if error
@@ -984,6 +953,59 @@ module.exports = function (app, shopData) {
       };
     }
   );
+
+  // step 3 - confirm delete food
+  // use the Express Router to handle our routes
+  app.get('/deleteFood-Confirm', function (req, res) {
+    // get data ingredient
+    var ingred_name_ = ingred_name_keyword;
+
+    // delete query ingredient
+    let sqlquery = `DELETE FROM ingredients WHERE ingred_name = "${ingred_name_}"`;
+    // sanitize the input
+    let deleteIngred = [req.sanitize(req.body.ingred_name_)];
+    // execute sql query to delete the ingredient
+    db.query(sqlquery, deleteIngred, (err, result) => {
+      // if error
+      if (err) {
+        // print message
+        console.log('>>> Ingredient not deleted. Please try again');
+        console.log(err + ' ' + sqlquery);
+
+        // throw error
+        res.render('deleteFood-Null.ejs', shopData);
+
+        // if not error
+      } else {
+        // print message
+        console.log('>>> Ingredient to delete: ' + ingred_name_);
+
+        // define the data to pass to the view
+        let newData = Object.assign({}, shopData, {
+          availableIngredients: result,
+        });
+
+        // render the delete food confirm page
+        res.render('deleteFood-Confirm.ejs', shopData);
+      }
+    });
+  });
+
+  // --->>> LIST ALL MY FOODS WITH API .................................................................................................................
+
+  // use the Express Router to handle our routes
+  app.get('/api', function (req, res) {
+    // Query database to get all the books
+    let sqlquery = 'SELECT * FROM ingredients';
+    // Execute the sql query
+    db.query(sqlquery, (err, result) => {
+      if (err) {
+        res.redirect('./');
+      }
+      // Return results as a JSON object
+      res.json(result);
+    });
+  });
 
 // end of module.exports
 };
