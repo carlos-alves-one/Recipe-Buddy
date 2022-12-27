@@ -870,6 +870,42 @@ module.exports = function (app, shopData) {
   });
 
   // use the Express Router to handle our routes
+  app.get('/deleteFood-Confirm', function (req, res) {
+    // get data ingredient
+    var ingred_name_ = req.body.ingred_name;
+
+    // delete query ingredient
+    let sqlquery = `DELETE FROM ingredients WHERE ingred_name = "${ingred_name_}"`;
+    // sanitize the input
+    let deleteIngred = [req.sanitize(req.body.ingred_name_)];
+    // execute sql query to delete the ingredient
+    db.query(sqlquery, deleteIngred, (err, result) => {
+      // if error
+      if (err) {
+        // print message
+        console.log('>>> Ingredient not deleted. Please try again');
+        console.log(err + ' ' + sqlquery);
+
+        // throw error
+        res.render('deleteFood-Null.ejs', shopData);
+
+        // if not error
+      } else {
+        // print message
+        console.log('>>> Ingredient to delete: ' + ingred_name_);
+
+        // define the data to pass to the view
+        let newData = Object.assign({}, shopData, {
+          availableIngredients: result,
+        });
+
+        // render the delete food confirm page
+        res.render('deleteFood-Confirm.ejs', shopData);
+      }
+    });
+  });
+  
+  // use the Express Router to handle our routes
   app.get(
     '/deleteFood-Result',
     // validate the input
@@ -932,7 +968,7 @@ module.exports = function (app, shopData) {
               // check we have data
               if (newData.availableIngredients.length == 0) {
                 // print message
-                console.log('>>> Ingredient not found. Please try again');
+                console.log('>>> Ingredient not found. Please try again...');
 
                 // render the search food page not found in the database
                 res.render('deleteFood-Null.ejs', newData);
@@ -942,44 +978,6 @@ module.exports = function (app, shopData) {
 
                 // render the search food result page
                 res.render('deleteFood-Result.ejs', newData);
-
-              //   // // if submit button is clicked
-              //   // app.get('/deleteFood-Confirm', function (req, res) {
-
-              //   // // print message
-              //   // console.log('>>> Delete request received');
-
-              //   // // get data food
-              //   // var ingred_name_ = req.body.ingred_name;
-
-              //   // // delete query food
-              //   // let sqlquery = `DELETE FROM ingredients WHERE ingred_name = "${ingred_name_}"`;
-
-              //   // let deleteIngred = [req.sanitize(req.body.ingred_name_)];
-
-              //   // // execute sql query to delete the food
-              //   // db.query(sqlquery, (err, result) => {
-              //   //   // if error
-              //   //   if (err) {
-              //   //     // print message
-              //   //     console.log('>>> Ingredient not deleted. Please try again');
-              //   //     console.log(err + ' ' + sqlquery);
-
-              //   //     // throw error
-              //   //     res.render('deleteFood-Null.ejs', shopData);
-              //   //   }
-              //   //   // if not error
-              //   //   else {
-              //   //     // render the delete food confirm page
-              //   //     res.render('deleteFood-Confirm.ejs', shopData);
-
-              //   //     // print the message
-              //   //     console.log(
-              //   //       '>>> The ingredient ' + req.body.keyword + ' has been deleted'
-              //   //     );
-              //   //   }
-              //   // });
-              // });
             }
           }
         });
