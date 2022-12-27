@@ -502,11 +502,17 @@ module.exports = function (app, shopData) {
             console.log('>>> Food added successfully');
           }
         });
-        // render the food list page
-        res.redirect('./foodList');
+        // render the add food result page
+        res.redirect('./addFood-Result');
       }
     }
   );
+
+  // use the Express Router to handle our routes
+  app.get('/addFood-Result', function (req, res) {
+    // render the add food result page
+    res.render('addFood-Result.ejs', shopData);
+  });
 
   // --->>> SEARCH FOOD ................................................................................................................................
 
