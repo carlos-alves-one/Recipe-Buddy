@@ -863,14 +863,14 @@ module.exports = function (app, shopData) {
 
   // --->>> DELETE FOOD ................................................................................................................................
 
-  // step 1 - search food to delete
+  // Step 1 - search food to delete
   // use the Express Router to handle our routes
   app.get('/deleteFood', function (req, res) {
     // render the search food page
     res.render('deleteFood.ejs', shopData);
   });
 
-  // step 2 - return search results
+  // Step 2 - return search results
   // use the Express Router to handle our routes
   app.get(
     '/deleteFood-Result',
@@ -954,7 +954,7 @@ module.exports = function (app, shopData) {
     }
   );
 
-  // step 3 - confirm delete food
+  // Step 3 - confirm delete food
   // use the Express Router to handle our routes
   app.get('/deleteFood-Confirm', function (req, res) {
     // get data ingredient
@@ -1005,6 +1005,69 @@ module.exports = function (app, shopData) {
       // Return results as a JSON object
       res.json(result);
     });
+  });
+
+  // --->>> LIST ALL MY FOODS WITH API ALL .................................................................................................................
+  
+  app.all('/api', function (req, res) {
+    // Handle requests for all HTTP methods
+    switch (req.method) {
+      case 'GET':
+        // Query database to get all the ingredients
+        let sqlqueryG = 'SELECT * FROM ingredients';
+        // Execute the sql query
+        db.query(sqlqueryG, (err, result) => {
+          if (err) {
+            res.redirect('./');
+          }
+          // Return results as a JSON object
+          res.json(result);
+        });
+        break;
+      case 'POST':
+        // Insert a new ingredient into the database
+        let sqlqueryP = 'INSERT INTO ingredients SET ?';
+        // Execute the sql query
+        db.query(sqlqueryP, req.body, (err, result) => {
+          if (err) {
+            res.redirect('./');
+          }
+          // Return results as a JSON object
+          res.json(result);
+        });
+        break;
+      case 'PUT':
+        // Update an ingredient in the database
+        let sqlqueryU = 'UPDATE ingredients SET ? WHERE ingred_id = ?';
+        // Execute the sql query
+        db.query(
+          sqlqueryU,
+          [req.body, req.body.ingred_id],
+          (err, result) => {
+            if (err) {
+              res.redirect('./');
+            }
+            // Return results as a JSON object
+            res.json(result);
+          }
+        );
+        break;
+      case 'DELETE':
+        // Delete an ingredient from the database
+        let sqlqueryD = 'DELETE FROM ingredients WHERE ingred_id = ?';
+        // Execute the sql query
+        db.query(sqlqueryD, req.body.ingred_id, (err, result) => {
+          if (err) {
+            res.redirect('./');
+          }
+          // Return results as a JSON object
+          res.json(result);
+        });
+        break;
+      default:
+        // Handle any other HTTP method
+        res.send('Sorry, that method is not supported here.');
+    }
   });
 
 // end of module.exports
